@@ -153,6 +153,16 @@ try
 
                         Assert-MockCalled -CommandName Get-PSRepository -Scope It -Times 1
                     }
+                    
+                    It 'Should not throw when PSGallery does not exist and SourceLocation unspecified' {
+                        $PowershellRepository.Name = "PSGallery"
+                        
+                        Mock Get-PSRepository {}
+
+                        { $PowershellRepository.Test() } | Should not throw
+
+                        Assert-MockCalled -CommandName Get-PSRepository -Scope It -Times 1
+                    }                    
 
                     It 'Should return $false when InstallationPolicy is incorrect' {
                         $PowershellRepository.Ensure = "Present"

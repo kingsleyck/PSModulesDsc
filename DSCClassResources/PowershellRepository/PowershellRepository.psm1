@@ -133,7 +133,7 @@ class PowershellRepository
         {
             if ($Count -ne 1)
             {
-                if (-not $this.SourceLocation)
+                if (-not $this.SourceLocation -and ($this.Name -ne "PSGallery"))
                 {
                     throw "SourceLocation is required when the PSRepository does not currently exist."
                 }
