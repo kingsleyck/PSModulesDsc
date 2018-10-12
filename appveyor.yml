@@ -2,7 +2,7 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.{build}.0.0
+version: 1.0.{build}.0
 image: Visual Studio 2017
 environment:
   gallery_api:
