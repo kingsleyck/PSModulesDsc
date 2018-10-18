@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2018 Chris Kingsley. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'DSC module to manage Powershell modules.'
+Description = 'DSC module to manage Powershell modules and repositories.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.0'

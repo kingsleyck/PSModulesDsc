@@ -67,6 +67,12 @@ class PowershellModule
 
         if ($this.Ensure -eq [Ensure]::Present)
         {
+            if (-not (Get-PackageProvider | Where-Object { $_.Name -eq "NuGet" -and $_.Version -ge "2.8.5.201" }))
+            {
+                Write-Verbose -Message "Installing latest NuGet package provider in order to use Install-Module."
+                $null = Install-PackageProvider -Name NuGet -Scope AllUsers -MinimumVersion 2.8.5.201 -Force
+            }
+
             if ($this.RequiredVersion -and ($Modules.Version -notcontains $this.RequiredVersion))
             {
                 Write-Verbose -Message "Installing module [$($this.Name)]."

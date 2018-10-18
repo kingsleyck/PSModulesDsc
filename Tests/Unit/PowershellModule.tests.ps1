@@ -227,7 +227,23 @@ try
                     Assert-MockCalled -CommandName Install-Module -Scope It -Times 1
                 }
 
-                It 'Should call Uninstall-Module then Install-Module if Ensure is Present and Version -lt desired' {
+                It 'Should call Install-PackageProvider if Ensure is Present and NuGet provider is missing' {
+                    $PowershellModule.Ensure = "Present"
+
+                    Mock Get-PackageProvider {}
+                    Mock Install-PackageProvider {}
+                    Mock Get-Module {}
+                    Mock Install-Module {}
+
+                    $PowershellModule.Set() | Should -Be $null
+
+                    Assert-MockCalled -CommandName Get-PackageProvider -Scope It -Times 1
+                    Assert-MockCalled -CommandName Install-PackageProvider -Scope It -Times 1
+                    Assert-MockCalled -CommandName Get-Module -Scope It -Times 1
+                    Assert-MockCalled -CommandName Install-Module -Scope It -Times 1
+                }
+
+                It 'Should call Uninstall-Module and Install-Module if Ensure is Present and Version -lt desired' {
                     $PowershellModule.Ensure = "Present"
                     $PowershellModule.RequiredVersion = [system.version]::New((1 + $ModuleExists.Version.Major), 0, 0, 0)
 
@@ -244,7 +260,7 @@ try
                     Assert-MockCalled -CommandName Install-Module -Scope It -Times 1
                 }
 
-                It 'Should call Uninstall-Module then Install-Module if Ensure is Present and Version -gt desired' {
+                It 'Should call Uninstall-Module and Install-Module if Ensure is Present and Version -gt desired' {
                     $PowershellModule.Ensure = "Present"
                     $PowershellModule.RequiredVersion = [system.version]::New(($ModuleExists.Version.Major - 1), 0, 0, 0)
 
